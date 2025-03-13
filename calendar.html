@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>월간 프로그램</title>
+
+    <!-- FullCalendar 최신 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        #calendar-container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .fc-daygrid-event {
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: black;
+            background: none !important; /* 이벤트 전체 배경 제거 */
+            border: none !important; /* 테두리 제거 */
+        }
+        .event-title {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 5px;
+            color: white;
+        }
+        .event-time {
+            display: block;
+            color: black;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>월간 프로그램</h2>
+
+    <div id="calendar-container">
+        <div id="calendar"></div>
+    </div>
+
+    <!-- FullCalendar 최신 버전 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'ko',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek'
+                },
+                eventContent: function(arg) {
+                    return { html: `<div>
+                        <span class="event-title" style="background: ${arg.event.extendedProps.color};">${arg.event.title}</span>
+                        <span class="event-time">${arg.event.extendedProps.time}</span>
+                    </div>` };
+                },
+                events: [  
+                    { 
+                        title: '끝내주는 남자 되는 법', 
+                        start: '2025-03-20T20:00:00', 
+                        url: 'https://howtolife.liveklass.com/classes/241237', 
+                        extendedProps: { time: '오후 8시', color: '#e91e63' }
+                    },
+                    { 
+                        title: '행복의 여신 되는 법(오프라인)', 
+                        start: '2025-03-21T10:00:00', 
+                        url: 'https://howtolife.liveklass.com/classes/240466', 
+                        extendedProps: { time: '오전 10시', color: '#f39c12' }
+                    },
+                    { 
+                        title: '강철멘탈 되는 법', 
+                        start: '2025-03-24T20:00:00', 
+                        url: 'https://howtolife.liveklass.com/classes/241248', 
+                        extendedProps: { time: '오후 8시', color: '#2ecc71' }
+                    },
+                    { 
+                        title: '5분 상담(오프라인)', 
+                        start: '2025-03-26T14:00:00', 
+                        url: 'https://howtolife.liveklass.com/classes/152658', 
+                        extendedProps: { time: '오후 2시', color: '#9b59b6' }
+                    }
+                ]
+            });
+            calendar.render();
+        });
+    </script>
+
+</body>
+</html>
