@@ -76,7 +76,6 @@
             font-size: 12px;
             font-weight: bold;
             color: red;
-            white-space: nowrap; /* 📌 "오늘"이 한 줄로 유지되도록 설정 */
         }
 
         /* 📌 월 변경 화살표 위치 변경 */
@@ -98,7 +97,15 @@
         .fc-prev-button { left: 15px; }
         .fc-next-button { right: 15px; }
 
-        /* 📌 반응형 스타일 적용 */
+        /* 📌 날짜에서 '일' 글자 제거 */
+        .fc-daygrid-day-number {
+            font-size: 14px;
+        }
+        .fc-daygrid-day-number::after {
+            content: "";
+        }
+
+        /* 📌 모바일에서 시간 줄바꿈 (오후 / 오전) */
         @media (max-width: 768px) {
             #calendar-container {
                 padding: 10px;
@@ -122,6 +129,9 @@
             }
             .fc-daygrid-day-frame {
                 min-height: 80px !important; /* 📌 모바일에서도 정사각형 유지 */
+            }
+            .event-time {
+                white-space: pre-line !important; /* 📌 모바일에서 '오전' '오후' 줄바꿈 */
             }
         }
     </style>
@@ -164,9 +174,11 @@
                     }
                 },
                 eventContent: function(arg) {
+                    let isMobile = window.innerWidth <= 768;
+                    let timeText = isMobile ? arg.event.extendedProps.time.replace(' ', '\n') : arg.event.extendedProps.time;
                     return { html: `<div>
                         <span class="event-title" style="background: ${arg.event.extendedProps.color}; font-size: inherit;">${arg.event.title}</span>
-                        <span class="event-time">${arg.event.extendedProps.time}</span>
+                        <span class="event-time">${timeText}</span>
                     </div>` };
                 },
                 events: [  
