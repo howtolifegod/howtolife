@@ -74,6 +74,7 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
             text-align: center;
+            word-break: keep-all; /* 2음절 이상 유지 */
         }
         .event-time {
             display: block;
@@ -92,6 +93,11 @@
             .fc-daygrid-event {
                 font-size: 12px !important;
                 padding: 3px;
+            }
+            .event-title {
+                font-size: 12px !important;
+                padding: 2px 5px;
+                word-break: keep-all; /* 2음절 이상 유지 */
             }
         }
     </style>
