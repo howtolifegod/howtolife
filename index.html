@@ -23,6 +23,39 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
+        .fc-toolbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .fc-toolbar-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem !important;
+        }
+        .fc-prev-button, .fc-next-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .fc-day-today {
+            background: #fff3cd !important;
+            position: relative;
+        }
+        .fc-day-today::after {
+            content: "오늘";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: bold;
+            color: red;
+            white-space: nowrap;
+        }
         .fc-daygrid-event {
             white-space: normal !important;
             word-wrap: break-word !important;
@@ -48,57 +81,7 @@
             font-size: 12px;
             margin-top: 3px;
         }
-        /* 📌 날짜 칸 높이 & 너비 동일하게 유지 */
-        .fc-daygrid-day-frame {
-            min-height: 100px !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .fc-daygrid-day {
-            width: 14.28% !important; /* 7일이므로 100% / 7 */
-        }
-        .fc-daygrid-day-events {
-            flex-grow: 1;
-        }
-
-        /* 📌 오늘 날짜 강조 */
-        .fc-day-today {
-            background: #fff3cd !important;
-            position: relative;
-        }
-        .fc-day-today::after {
-            content: "오늘";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 12px;
-            font-weight: bold;
-            color: red;
-            white-space: nowrap; /* 📌 "오늘"이 한 줄로 유지되도록 설정 */
-        }
-
-        /* 📌 월 변경 화살표 위치 변경 */
-        .fc-toolbar-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem !important;
-        }
-        .fc-prev-button, .fc-next-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .fc-prev-button { left: 15px; }
-        .fc-next-button { right: 15px; }
-
-        /* 📌 반응형 스타일 적용 */
+        /* 반응형 스타일 적용 */
         @media (max-width: 768px) {
             #calendar-container {
                 padding: 10px;
@@ -106,22 +89,9 @@
             .fc-toolbar-title {
                 font-size: 1.3rem !important;
             }
-            .fc-header-toolbar {
-                flex-wrap: wrap;
-                justify-content: center !important;
-                position: relative;
-            }
             .fc-daygrid-event {
                 font-size: 12px !important;
                 padding: 3px;
-            }
-            .event-title {
-                font-size: 12px !important; /* 📌 모바일에서 강의명 크기를 시간과 동일하게 줄임 */
-                padding: 2px 5px;
-                word-break: break-word;
-            }
-            .fc-daygrid-day-frame {
-                min-height: 80px !important; /* 📌 모바일에서도 정사각형 유지 */
             }
         }
     </style>
@@ -141,13 +111,13 @@
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth', // 📌 기본값을 월간으로 설정
+                initialView: 'dayGridMonth',
                 locale: 'ko',
                 height: 'auto',
                 headerToolbar: {
-                    left: '', // 📌 화살표 위치 변경 (기본 버튼 제거)
+                    left: 'prev',
                     center: 'title',
-                    right: '' // 📌 month, week 버튼 완전히 제거
+                    right: 'next'
                 },
                 customButtons: {
                     prev: {
@@ -164,7 +134,7 @@
                     }
                 },
                 dayCellContent: function(arg) {
-                       return arg.date.getDate(); // 날짜에서 '일' 제거
+                    return arg.date.getDate();
                 },
                 eventContent: function(arg) {
                     return { html: `<div>
@@ -200,22 +170,6 @@
                 ]
             });
             calendar.render();
-
-            // 📌 커스텀 화살표 버튼 추가
-            let toolbar = document.querySelector('.fc-toolbar-title');
-            let prevButton = document.createElement('button');
-            let nextButton = document.createElement('button');
-
-            prevButton.innerHTML = '&lt;';
-            prevButton.classList.add('fc-prev-button');
-            prevButton.onclick = () => calendar.prev();
-
-            nextButton.innerHTML = '&gt;';
-            nextButton.classList.add('fc-next-button');
-            nextButton.onclick = () => calendar.next();
-
-            toolbar.parentElement.insertBefore(prevButton, toolbar);
-            toolbar.parentElement.appendChild(nextButton);
         });
     </script>
 
