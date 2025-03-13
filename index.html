@@ -65,7 +65,6 @@
             color: black;
             background: none !important;
             border: none !important;
-            overflow: hidden;
         }
         .event-title {
             display: inline-block;
@@ -86,11 +85,15 @@
             margin-top: 3px;
         }
         .fc-daygrid-day-frame {
-            min-height: 80px !important;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            overflow: hidden;
+            align-items: center;
+            min-height: 100px !important;
+        }
+        .fc-daygrid-day-events {
+            width: 100%;
+            text-align: center;
         }
         /* 반응형 스타일 적용 */
         @media (max-width: 768px) {
@@ -103,15 +106,12 @@
             .fc-daygrid-event {
                 font-size: 12px !important;
                 padding: 3px;
-                max-width: 100%;
-                overflow: hidden;
             }
             .event-title {
                 font-size: 12px !important;
                 padding: 2px 5px;
                 word-break: keep-all;
-                max-width: 100%;
-                white-space: normal;
+                display: block;
             }
         }
     </style>
