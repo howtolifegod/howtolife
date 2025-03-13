@@ -163,6 +163,9 @@
                         }
                     }
                 },
+                dayCellContent: function(arg) {
+                       return arg.date.getDate(); // 날짜에서 '일' 제거
+                },
                 eventContent: function(arg) {
                     return { html: `<div>
                         <span class="event-title" style="background: ${arg.event.extendedProps.color}; font-size: inherit;">${arg.event.title}</span>
