@@ -70,12 +70,32 @@
         .fc-day-today::after {
             content: "오늘";
             position: absolute;
-            top: 2px;
-            right: 5px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 12px;
             font-weight: bold;
             color: red;
         }
+
+        /* 📌 월 변경 화살표 위치 변경 */
+        .fc-toolbar-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem !important;
+        }
+        .fc-prev-button, .fc-next-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .fc-prev-button { left: 15px; }
+        .fc-next-button { right: 15px; }
 
         /* 📌 반응형 스타일 적용 */
         @media (max-width: 768px) {
@@ -88,6 +108,7 @@
             .fc-header-toolbar {
                 flex-wrap: wrap;
                 justify-content: center !important;
+                position: relative;
             }
             .fc-daygrid-event {
                 font-size: 12px !important;
@@ -123,9 +144,23 @@
                 locale: 'ko',
                 height: 'auto',
                 headerToolbar: {
-                    left: 'prev,next', // 📌 Today 버튼 완전히 제거
+                    left: '', // 📌 화살표 위치 변경 (기본 버튼 제거)
                     center: 'title',
                     right: '' // 📌 month, week 버튼 완전히 제거
+                },
+                customButtons: {
+                    prev: {
+                        text: '<',
+                        click: function() {
+                            calendar.prev();
+                        }
+                    },
+                    next: {
+                        text: '>',
+                        click: function() {
+                            calendar.next();
+                        }
+                    }
                 },
                 eventContent: function(arg) {
                     return { html: `<div>
@@ -161,6 +196,22 @@
                 ]
             });
             calendar.render();
+
+            // 📌 커스텀 화살표 버튼 추가
+            let toolbar = document.querySelector('.fc-toolbar-title');
+            let prevButton = document.createElement('button');
+            let nextButton = document.createElement('button');
+
+            prevButton.innerHTML = '&lt;';
+            prevButton.classList.add('fc-prev-button');
+            prevButton.onclick = () => calendar.prev();
+
+            nextButton.innerHTML = '&gt;';
+            nextButton.classList.add('fc-next-button');
+            nextButton.onclick = () => calendar.next();
+
+            toolbar.parentElement.insertBefore(prevButton, toolbar);
+            toolbar.parentElement.appendChild(nextButton);
         });
     </script>
 
