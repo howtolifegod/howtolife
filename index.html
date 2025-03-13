@@ -45,6 +45,16 @@
             font-size: 12px;
             margin-top: 3px;
         }
+        /* 📌 칸 높이 일정하게 설정 */
+        .fc-daygrid-day-frame {
+            min-height: 100px !important; /* 최소 높이 설정 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .fc-daygrid-day-events {
+            flex-grow: 1;
+        }
     </style>
 </head>
 
@@ -65,6 +75,7 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'ko',
+                height: 'auto', // 📌 달력의 전체 높이를 자동으로 조정하여 균형 유지
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -78,13 +89,13 @@
                 },
                 events: [  
                     { 
-                        title: '끝내주는 남자', 
+                        title: '끝내주는 남자 되는 법', 
                         start: '2025-03-20T20:00:00', 
                         url: 'https://howtolife.liveklass.com/classes/241237', 
                         extendedProps: { time: '오후 8시', color: '#e91e63' }
                     },
                     { 
-                        title: '행복의 여신', 
+                        title: '행복의 여신(오프라인)', 
                         start: '2025-03-21T10:00:00', 
                         url: 'https://howtolife.liveklass.com/classes/240466', 
                         extendedProps: { time: '오전 10시', color: '#f39c12' }
@@ -96,7 +107,7 @@
                         extendedProps: { time: '오후 8시', color: '#2ecc71' }
                     },
                     { 
-                        title: '5분 상담', 
+                        title: '5분 상담(오프라인)', 
                         start: '2025-03-26T14:00:00', 
                         url: 'https://howtolife.liveklass.com/classes/152658', 
                         extendedProps: { time: '오후 2시', color: '#9b59b6' }
