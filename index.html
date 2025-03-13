@@ -65,6 +65,7 @@
             color: black;
             background: none !important;
             border: none !important;
+            overflow: hidden;
         }
         .event-title {
             display: inline-block;
@@ -74,13 +75,22 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
             text-align: center;
-            word-break: keep-all; /* 2음절 이상 유지 */
+            word-break: keep-all;
+            max-width: 100%;
+            white-space: normal;
         }
         .event-time {
             display: block;
             color: black;
             font-size: 12px;
             margin-top: 3px;
+        }
+        .fc-daygrid-day-frame {
+            min-height: 80px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow: hidden;
         }
         /* 반응형 스타일 적용 */
         @media (max-width: 768px) {
@@ -93,11 +103,15 @@
             .fc-daygrid-event {
                 font-size: 12px !important;
                 padding: 3px;
+                max-width: 100%;
+                overflow: hidden;
             }
             .event-title {
                 font-size: 12px !important;
                 padding: 2px 5px;
-                word-break: keep-all; /* 2음절 이상 유지 */
+                word-break: keep-all;
+                max-width: 100%;
+                white-space: normal;
             }
         }
     </style>
