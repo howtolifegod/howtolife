@@ -45,11 +45,15 @@
             font-size: 12px;
             margin-top: 3px;
         }
+        /* 📌 칸 높이 & 너비 동일하게 유지 */
         .fc-daygrid-day-frame {
-            min-height: 100px !important;
+            min-height: 80px !important;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+        }
+        .fc-daygrid-day {
+            width: 14.28% !important; /* 7일이므로 100% / 7 */
         }
         .fc-daygrid-day-events {
             flex-grow: 1;
@@ -75,6 +79,9 @@
                 font-size: 12px !important;
                 padding: 3px 6px;
             }
+            .fc-daygrid-day-frame {
+                min-height: 60px !important; /* 모바일에서도 정사각형 유지 */
+            }
         }
     </style>
 </head>
@@ -93,13 +100,13 @@
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: window.innerWidth < 768 ? 'timeGridWeek' : 'dayGridMonth', // 모바일에서는 주간 보기
+                initialView: 'dayGridMonth', // 📌 월 단위만 표시 (주 단위 제거)
                 locale: 'ko',
                 height: 'auto',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek'
+                    right: '' // 📌 주 단위 버튼 제거 (week 버튼 삭제)
                 },
                 eventContent: function(arg) {
                     return { html: `<div>
