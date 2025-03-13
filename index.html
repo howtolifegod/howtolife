@@ -30,8 +30,8 @@
             border-radius: 5px;
             font-size: 14px;
             color: black;
-            background: none !important; /* 이벤트 전체 배경 제거 */
-            border: none !important; /* 테두리 제거 */
+            background: none !important; /* 전체 배경 제거 */
+            border: none !important;
         }
         .event-title {
             display: inline-block;
@@ -56,7 +56,7 @@
         <div id="calendar"></div>
     </div>
 
-    <!-- FullCalendar 최신 버전 CDN -->
+    <!-- FullCalendar 최신 JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
     <script>
@@ -78,13 +78,13 @@
                 },
                 events: [  
                     { 
-                        title: '끝내주는 남자 되는 법', 
+                        title: '끝내주는 남자', 
                         start: '2025-03-20T20:00:00', 
                         url: 'https://howtolife.liveklass.com/classes/241237', 
                         extendedProps: { time: '오후 8시', color: '#e91e63' }
                     },
                     { 
-                        title: '행복의 여신 되는 법(오프라인)', 
+                        title: '행복의 여신', 
                         start: '2025-03-21T10:00:00', 
                         url: 'https://howtolife.liveklass.com/classes/240466', 
                         extendedProps: { time: '오전 10시', color: '#f39c12' }
@@ -96,7 +96,7 @@
                         extendedProps: { time: '오후 8시', color: '#2ecc71' }
                     },
                     { 
-                        title: '5분 상담(오프라인)', 
+                        title: '5분 상담', 
                         start: '2025-03-26T14:00:00', 
                         url: 'https://howtolife.liveklass.com/classes/152658', 
                         extendedProps: { time: '오후 2시', color: '#9b59b6' }
