@@ -76,7 +76,6 @@
             font-size: 12px;
             font-weight: bold;
             color: red;
-            white-space: nowrap; /* 📌 "오늘"이 한 줄로 유지되도록 설정 */
         }
 
         /* 📌 월 변경 화살표 위치 변경 */
@@ -163,14 +162,11 @@
                         }
                     }
                 },
-                dayCellContent: function(arg) {
-                       return arg.date.getDate(); // 날짜에서 '일' 제거
-                },
                 eventContent: function(arg) {
-                    return { html: <div>
+                    return { html: `<div>
                         <span class="event-title" style="background: ${arg.event.extendedProps.color}; font-size: inherit;">${arg.event.title}</span>
                         <span class="event-time">${arg.event.extendedProps.time}</span>
-                    </div> };
+                    </div>` };
                 },
                 events: [  
                     { 
