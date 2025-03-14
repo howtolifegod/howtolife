@@ -72,32 +72,59 @@
         }
 
         /* 📌 월 변경 화살표 위치 변경 */
-        .fc-toolbar-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem !important;
-        }
-        .fc-prev-button, .fc-next-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .fc-prev-button { left: 15px; }
-        .fc-next-button { right: 15px; }
+
+.fc-toolbar {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;
+    position: relative;
+}
+
+/* 타이틀 (예: 2025년 3월) */
+.fc-toolbar-title {
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 월 변경 버튼 */
+.fc-prev-button, .fc-next-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* 왼쪽 버튼 (이전 달) */
+.fc-prev-button {
+    left: 10px;
+}
+
+/* 오른쪽 버튼 (다음 달) */
+.fc-next-button {
+    right: 10px;
+}
 
         /* 📌 반응형 스타일 적용 */
-        @media (max-width: 768px) {
-            #calendar-container {
-                padding: 10px;
-            }
-            .fc-toolbar-title {
-                font-size: 1.3rem !important;
-            }
+       @media (max-width: 768px) {
+    .fc-toolbar {
+        padding: 0 20px; /* 달력 내부에서 버튼이 양 끝에 위치하도록 조정 */
+    }
+    .fc-toolbar-title {
+        font-size: 1.3rem !important;
+        padding: 0 50px; /* 타이틀과 버튼 사이 간격 확보 */
+    }
+    .fc-prev-button {
+        left: 5px;
+    }
+    .fc-next-button {
+        right: 5px;
+    }
+}
             .fc-header-toolbar {
                 flex-wrap: wrap;
                 justify-content: center !important;
@@ -108,7 +135,7 @@
                 padding: 3px;
             }
             .event-title {
-                font-size: 12px !important; /* 📌 모바일에서 강의명 크기를 시간과 동일하게 줄임 */
+                font-size: 11px !important; /* 📌 모바일에서 강의명 크기를 시간과 동일하게 줄임 */
                 padding: 2px 5px;
                 word-break: break-word;
             }
@@ -137,24 +164,11 @@
                 locale: 'ko',
                 height: 'auto',
                 headerToolbar: {
-                    left: '', // 📌 화살표 위치 변경 (기본 버튼 제거)
+                    left: 'prev', // 
                     center: 'title',
-                    right: '' // 📌 month, week 버튼 완전히 제거
+                    right: 'next' // 📌 month, week 버튼 완전히 제거
                 },
-                customButtons: {
-                    prev: {
-                        text: '<',
-                        click: function() {
-                            calendar.prev();
-                        }
-                    },
-                    next: {
-                        text: '>',
-                        click: function() {
-                            calendar.next();
-                        }
-                    }
-                },
+         
             dayCellContent: function(arg) {
                 return { html: `<div style="text-align: right; padding: 5px; font-size: 14px; font-weight: bold;">${arg.date.getDate()}</div>` };
             },
@@ -199,21 +213,7 @@
             });
             calendar.render();
 
-            // 📌 커스텀 화살표 버튼 추가
-            let toolbar = document.querySelector('.fc-toolbar-title');
-            let prevButton = document.createElement('button');
-            let nextButton = document.createElement('button');
-
-            prevButton.innerHTML = '&lt;';
-            prevButton.classList.add('fc-prev-button');
-            prevButton.onclick = () => calendar.prev();
-
-            nextButton.innerHTML = '&gt;';
-            nextButton.classList.add('fc-next-button');
-            nextButton.onclick = () => calendar.next();
-
-            toolbar.parentElement.insertBefore(prevButton, toolbar);
-            toolbar.parentElement.appendChild(nextButton);
+ 
         });
     </script>
 
