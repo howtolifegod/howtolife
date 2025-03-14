@@ -17,11 +17,13 @@
         }
         #calendar-container {
             max-width: 900px;
+            min-width: 900px; /* 📌 모바일에서도 동일한 크기로 유지 */
             margin: auto;
             background: white;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            overflow-x: auto; /* 📌 모바일에서도 스크롤 가능하도록 설정 */
         }
         .fc-daygrid-event {
             white-space: normal !important;
@@ -72,75 +74,52 @@
         }
 
         /* 📌 월 변경 화살표 위치 변경 */
+        .fc-toolbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
 
-.fc-toolbar {
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    align-items: center;
-    position: relative;
-}
+        .fc-toolbar-title {
+            font-size: 1.5rem !important;
+            font-weight: bold;
+            text-align: center;
+        }
 
-/* 타이틀 (예: 2025년 3월) */
-.fc-toolbar-title {
-    font-size: 1.5rem !important;
-    font-weight: bold;
-    text-align: center;
-}
+        .fc-prev-button, .fc-next-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-/* 월 변경 버튼 */
-.fc-prev-button, .fc-next-button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 10px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
+        .fc-prev-button {
+            left: 10px;
+        }
 
-/* 왼쪽 버튼 (이전 달) */
-.fc-prev-button {
-    left: 10px;
-}
+        .fc-next-button {
+            right: 10px;
+        }
 
-/* 오른쪽 버튼 (다음 달) */
-.fc-next-button {
-    right: 10px;
-}
-
-        /* 📌 반응형 스타일 적용 */
-       @media (max-width: 768px) {
-    .fc-toolbar {
-        padding: 0 20px; /* 달력 내부에서 버튼이 양 끝에 위치하도록 조정 */
-    }
-    .fc-toolbar-title {
-        font-size: 1.3rem !important;
-        padding: 0 50px; /* 타이틀과 버튼 사이 간격 확보 */
-    }
-    .fc-prev-button {
-        left: 5px;
-    }
-    .fc-next-button {
-        right: 5px;
-    }
-}
-            .fc-header-toolbar {
-                flex-wrap: wrap;
-                justify-content: center !important;
-                position: relative;
+        /* 📌 반응형 제거 (모바일에서도 웹과 동일한 화면 유지) */
+        @media (max-width: 768px) {
+            #calendar-container {
+                overflow-x: auto;
             }
-            .fc-daygrid-event {
-                font-size: 12px !important;
-                padding: 3px;
+            .fc-toolbar-title {
+                font-size: 1.3rem !important;
+                padding: 0 50px;
             }
-            .event-title {
-                font-size: 12px !important; /*
-                padding: 2px 5px;
-                word-break: break-word;
+            .fc-prev-button {
+                left: 5px;
             }
-            .fc-daygrid-day-frame {
-                min-height: 80px !important; /* 📌 모바일에서도 정사각형 유지 */
+            .fc-next-button {
+                right: 5px;
             }
         }
     </style>
@@ -160,24 +139,19 @@
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth', // 📌 기본값을 월간으로 설정
+                initialView: 'dayGridMonth', // 📌 기본값을 월간으로 설정 (모바일에서도 유지)
                 locale: 'ko',
                 height: 'auto',
+                aspectRatio: 1.35, // 📌 달력의 가로세로 비율 조정 (모바일에서도 동일한 크기 유지)
+                dayMaxEventRows: true, // 📌 이벤트 개수가 많아도 일정 높이 유지
                 headerToolbar: {
-                    left: 'prev', // 
+                    left: 'prev',
                     center: 'title',
-                    right: 'next' // 📌 month, week 버튼 완전히 제거
+                    right: 'next'
                 },
-         
-            dayCellContent: function(arg) {
-                return { html: `<div style="text-align: right; padding: 5px; font-size: 14px; font-weight: bold;">${arg.date.getDate()}</div>` };
-            },
-            eventContent: function(arg) {
-                return { html: `<div>
-                    <span class="event-title" style="background: ${arg.event.extendedProps.color}; font-size: inherit;">${arg.event.title}</span>
-                    <span class="event-time">${arg.event.extendedProps.time}</span>
-                </div>` };
-            },
+                dayCellContent: function(arg) {
+                    return { html: `<div style="text-align: right; padding: 5px; font-size: 14px; font-weight: bold;">${arg.date.getDate()}</div>` };
+                },
                 eventContent: function(arg) {
                     return { html: `<div>
                         <span class="event-title" style="background: ${arg.event.extendedProps.color}; font-size: inherit;">${arg.event.title}</span>
@@ -206,8 +180,6 @@
                 ]
             });
             calendar.render();
-
- 
         });
     </script>
 
